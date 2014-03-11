@@ -155,7 +155,7 @@ module.exports = function(grunt) {
       var tagName = opts.tagName.replace('%VERSION%', globalVersion);
       var tagMessage = opts.tagMessage.replace('%VERSION%', globalVersion);
 
-      exec('git tag -a ' + tagName + ' -m "' + tagMessage + '"' , function(err, stdout, stderr) {
+      exec('git tag ' + tagName, function(err, stdout, stderr) {
         if (err) {
           grunt.fatal('Can not create the tag:\n  ' + stderr);
         }
