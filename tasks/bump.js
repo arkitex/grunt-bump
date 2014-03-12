@@ -160,6 +160,7 @@ module.exports = function(grunt) {
           grunt.fatal('Can not create the tag:\n  ' + stderr);
         }
         grunt.log.ok('Tagged as "' + tagName + '"');
+        grunt.log.ok(stdout);
         next();
       });
     });
@@ -167,11 +168,12 @@ module.exports = function(grunt) {
 
     // PUSH CHANGES
     runIf(opts.push, function() {
-      exec('git push ' + opts.pushTo + ' master:master && git push ' + opts.pushTo + ' master:master --tags', function(err, stdout, stderr) {
+      exec('git symbolic-ref HEAD && git push ' + opts.pushTo + ' && git push ' + opts.pushTo + ' ' + opts.tagName.replace('%VERSION%', globalVersion), function(err, stdout, stderr) {
         if (err) {
           grunt.fatal('Can not push to ' + opts.pushTo + ':\n  ' + stderr);
         }
         grunt.log.ok('Pushed to ' + opts.pushTo);
+        grunt.log.ok(stdout);
         next();
       });
     });
